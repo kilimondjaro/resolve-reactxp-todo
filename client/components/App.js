@@ -71,25 +71,7 @@ const styles = {
 class App extends Component {
   constructor(props) {
     super(props)
-    this._translationValue = Animated.createValue(-100)
-    this._animatedStyle = Styles.createAnimatedTextStyle({
-      transform: [
-        {
-          translateY: this._translationValue
-        }
-      ]
-    })
     this.state = { newTodo: '' }
-  }
-
-  componentDidMount() {
-    let animation = Animated.timing(this._translationValue, {
-      toValue: 0,
-      easing: Animated.Easing.OutBack(),
-      duration: 500
-    })
-
-    animation.start()
   }
 
   render() {
