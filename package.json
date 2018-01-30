@@ -21,7 +21,7 @@
     "dev": "INDEX=client/index.js resolve-scripts dev",
     "start": "resolve-scripts start",
     "ios": "ROOT_DIR=http://0.0.0.0:3000 react-native run-ios",
-    "android": "ROOT_DIR=http://0.0.0.0.70:3000 react-native run-android",
+    "android": "ROOT_DIR=http://0.0.0.0:3000 react-native run-android",
     "update": "resolve-scripts update",
     "flow": "flow",
     "test": "jest tests/unit/**",
