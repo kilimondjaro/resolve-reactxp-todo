@@ -584,4 +584,11 @@ export default class ToggleSwitch extends RX.Component {
 }
 ```
 
+## Root Directory
 
+If you run your Resolve application on mobile device or even on similator you should specify a root dirrectory along with a host and a port.
+
+```
+"ios": "ROOT_DIR=http://0.0.0.0:3000 react-native run-ios",
+"android": "ROOT_DIR=http://0.0.0.0:3000 react-native run-android"
+```
