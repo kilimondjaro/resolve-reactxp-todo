@@ -461,14 +461,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(App)
 Add `ToggleSwitch.js` file.
 
 ```js
-/**
- * ToggleSwitch.js
- * Copyright: Microsoft 2017
- *
- * A simple toggle control built in ReactXP that allows users to
- * pick between two values.
- */
-
 import React from 'react';
 import RX from 'reactxp';
 
