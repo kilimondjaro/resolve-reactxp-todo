@@ -52,7 +52,7 @@ Copy extracted `ios` and `android` folders to your `resolve-reactxp-todo` projec
 
 ## Install necessary dependencies
 
-Add these npm dependencies to your `package.json` file:
+Add these npm dependencies to your `package.json` file and run `npm install`.
 
 ```
 "react-native": "^0.51.0",
@@ -83,7 +83,7 @@ Add `.babelrc` file
 ## Environment variables
 Since `Resolve` uses enviroment variables and react native does not support them, you should install additional babel plugin for support of inline environment variables.
 
-Install.
+Install `babel-plugin-transform-inline-environment-variables`.
 
 ```
 npm i --save-dev babel-plugin-transform-inline-environment-variables
@@ -130,9 +130,10 @@ You then should update a path to this index file for all three platforms.
 
 ## Web
 
-For `web` application update a starting sctipt in `package.json` file.
+For `web` application update `dev` and `build` sctipts in `package.json` file.
 
 ```
+"build": "INDEX=client/index.js resolve-scripts build",
 "dev": "INDEX=client/index.js resolve-scripts dev",
 ```
 
@@ -175,7 +176,7 @@ protected String getMainComponentName() {
 
 ## Runing Hello World
 
-Replace `html` with ReactXP in order to run application on all platforms.
+Replace `React` components with `ReactXP` components in `client/components/App.js` in order to run application on all platforms.
 
 ```js
 import React from 'react'
