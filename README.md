@@ -1,58 +1,58 @@
 
-# **Resolve + Reactxp Todo Example**
+# **Resolve + ReactXP ToDo List Example**
 
 
 # Getting Started
-## Creating a New ReSolve Application
+## Create a New ReSolve Application
 
-Use the [create-resolve-app](https://github.com/reimagined/resolve/tree/master/packages/create-resolve-app) CLI tool to create a new reSolve project.
+* Use the [create-resolve-app](https://github.com/reimagined/resolve/tree/master/packages/create-resolve-app) CLI tool to create a new reSolve project.
 
-Install create-resolve-app globally.
+  * Install the [create-resolve-app](https://www.npmjs.com/package/create-resolve-app) package globally.
 
-```
-npm i -g create-resolve-app
-```
+    ```sh
+    npm i -g create-resolve-app
+    ```
 
-Create an empty reSolve project and run the application in the development mode.
+  * Create an empty reSolve project and run the application in the development mode.
 
-```
-create-resolve-app resolve-reactxp-todo
-cd resolve-reactxp-todo
-npm run dev
-```
+    ```sh
+    create-resolve-app resolve-reactxp-todo
+    cd resolve-reactxp-todo
+    npm run dev
+    ```
 
-The application opens in the browser at [http://localhost:3000/](http://localhost:3000/).
+The application opens in a browser at [http://localhost:3000](http://localhost:3000).
 
-## Creating a New React Native Application
+## Create a New React Native Application
 
-Use the [create-react-native-app](https://github.com/react-community/create-react-native-app) CLI tool to create a new react native project.
+* Use the [create-react-native-app](https://github.com/react-community/create-react-native-app) CLI tool to create a new react native project.
 
-Install create-react-native-app globally.
+  * Install the [create-react-native-app](https://www.npmjs.com/package/create-react-native-app) package globally.
 
-```
-npm i -g create-react-native-app
-```
+    ```sh
+    npm i -g create-react-native-app
+    ```
 
-Create a default react native project.
+  * Create a default react native project.
 
-```
-create-react-native-app ResolveReactxpTodo
-cd ResolveReactxpTodo/
-```
+    ```sh
+    create-react-native-app ResolveReactxpTodo
+    cd ResolveReactxpTodo/
+    ```
 
-By default all native folders are hidden inside build scripts, that is why you should run `eject` command.
+* By default all native folders are hidden inside build scripts. Run the `eject` command to access them.
 
-```
-npm run eject
-```
+  ```sh
+  npm run eject
+  ```
 
-Copy extracted `ios` and `android` folders to your `resolve-reactxp-todo` project folder.
+* Copy the ejected `ios` and `android` folders into your `resolve-reactxp-todo` project folder.
 
-# Set up ReactXP infrastructure
+# Set up the ReactXP Infrastructure
 
-## Install necessary dependencies
+## Install the required dependencies
 
-Add these npm dependencies to your `package.json` file and run `npm install`.
+Add the following npm dependencies to your `package.json` file and run `npm i` to install them.
 
 ```
 "react-native": "^0.51.0",
@@ -63,16 +63,15 @@ Add these npm dependencies to your `package.json` file and run `npm install`.
 "reactxp-video": "^0.2.3"
 ```
 
+You should also install a `devDependencies` package:
 
-Also install few devDependencies:
-
-```
+```sh
 npm i --save-dev babel-preset-react-native
 ```
 
-Add `.babelrc` file
+Configure Babel by adding a `.babelrc` file with the following contents:
 
-```
+```js
 {
   "presets": [
     "react-native"
@@ -81,69 +80,71 @@ Add `.babelrc` file
 ```
 
 ## Environment variables
-Since `Resolve` uses enviroment variables and react native does not support them, you should install additional babel plugin for support of inline environment variables.
 
-Install `babel-plugin-transform-inline-environment-variables`.
+Since `ReSolve` uses enviroment variables and react native does not support them, you should install additional babel plugin for inline environment variables support:
 
-```
-npm i --save-dev babel-plugin-transform-inline-environment-variables
-```
+* Install `babel-plugin-transform-inline-environment-variables`.
 
-Update `.babelrc` file.
+  ```sh
+  npm i --save-dev babel-plugin-transform-inline-environment-variables
+  ```
 
-```
-{
-  "presets": [
-    "react-native"
-  ],
-  "plugins": [
-    "transform-inline-environment-variables"
-  ]
-}
-```
+* Update the `.babelrc` file.
+
+  ```js
+  {
+    "presets": [
+      "react-native"
+    ],
+    "plugins": [
+      "transform-inline-environment-variables"
+    ]
+  }
+  ```
 
 
 # Client index file
-In ReactXP applications you will have one client index file for all platforms. Since `Resolve` by default supports only web applications, you should create a new cleint index file.
 
-Create ReactXP a new `client/index.js` file.
+ReactXP applications use a single `index.js` file for all platforms. Since `ReSolve` supports only web applications by default, you should create a new `index.js` file.
 
-```js
-import React from 'react'
-import RX from 'reactxp'
-import { Provider } from 'react-redux'
+* Create ReactXP a new `client/index.js` file.
 
-import clientConfig from '../resolve.client.config'
+  ```js
+  import React from 'react'
+  import RX from 'reactxp'
+  import { Provider } from 'react-redux'
 
-const { rootComponent: RootComponent, createStore } = clientConfig
-const store = createStore(window.__INITIAL_STATE__)
+  import clientConfig from '../resolve.client.config'
 
-RX.App.initialize(true, true)
-RX.UserInterface.setMainView(
-  <Provider store={store}>
-    <RootComponent />
-  </Provider>
-)
-```
+  const { rootComponent: RootComponent, createStore } = clientConfig
+  const store = createStore(window.__INITIAL_STATE__)
 
-You then should update a path to this index file for all three platforms.
+  RX.App.initialize(true, true)
+  RX.UserInterface.setMainView(
+    <Provider store={store}>
+      <RootComponent />
+    </Provider>
+  )
+  ```
 
-## Web
+* Update a path to this `index.js` file for all three platforms.
 
-For `web` application update `dev` and `build` sctipts in `package.json` file.
+  * For `web` application update `dev` and `build` sctipts in `package.json` file.
 
-```
-"build": "INDEX=client/index.js resolve-scripts build",
-"dev": "INDEX=client/index.js resolve-scripts dev",
-```
+  ```
+  "build": "INDEX=client/index.js resolve-scripts build",
+  "dev": "INDEX=client/index.js resolve-scripts dev",
+  ```
+  
+  * For `iOS` application update `ios/<project_name>/AppDelegate.m`.
 
-## iOS
-For `iOS` application update `ios/<project_name>/AppDelegate.m`.
+  Update index file path
 
-Update index file path
-```ObjectiveC
-jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"client/index" fallbackResource:nil];
-```
+  ```ObjectiveC
+  jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"client/index" fallbackResource:nil];
+  ```
+
+<!-- edited till here -->
 
 Also all ReactXP applications should have the same `moduleName:@"RXApp"`, which you can change in the same `AppDelegate.m`
 
