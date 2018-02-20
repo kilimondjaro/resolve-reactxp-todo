@@ -52,36 +52,36 @@ The application opens in a browser at [http://localhost:3000](http://localhost:3
 
 ## Install the Required Dependencies
 
-Add the following npm dependencies to your `package.json` file and run `npm i` to install them.
+* Add the following npm dependencies to your `package.json` file and run `npm i` to install them:
 
-```
-"react-native": "^0.51.0",
-"react-native-windows": "^0.51.0-rc.1",
-"reactxp": "^0.51.0",
-"reactxp-imagesvg": "^0.2.8",
-"reactxp-navigation": "^1.0.15",
-"reactxp-video": "^0.2.3"
-```
+  ```
+  "react-native": "^0.51.0",
+  "react-native-windows": "^0.51.0-rc.1",
+  "reactxp": "^0.51.0",
+  "reactxp-imagesvg": "^0.2.8",
+  "reactxp-navigation": "^1.0.15",
+  "reactxp-video": "^0.2.3"
+  ```
 
-You should also install a `devDependencies` package:
+* Install a `devDependencies` package:
 
-```sh
-npm i --save-dev babel-preset-react-native
-```
+  ```sh
+  npm i --save-dev babel-preset-react-native
+  ```
 
-Configure Babel by adding a `.babelrc` file with the following contents:
+* Configure Babel by adding a `.babelrc` file with the following contents:
 
-```js
-{
-  "presets": [
-    "react-native"
-  ]
-}
-```
+  ```js
+  {
+    "presets": [
+      "react-native"
+    ]
+  }
+  ```
 
 ## Environment Variables
 
-Since `ReSolve` uses enviroment variables and react native does not support them, you should install additional babel plugin for inline environment variables support:
+Since `ReSolve` uses enviroment variables and React Native does not support them, you should install additional Babel plugin for inline environment variables support:
 
 * Install `babel-plugin-transform-inline-environment-variables`.
 
@@ -210,16 +210,18 @@ ReactXP applications use a single `index.js` file for all platforms. Since `ReSo
   export default App
   ```
 
-* Run your application:
+* Start your application:
 
   * For web version, run `npm run dev`.
 
-  * For iOS and Android applications add extra scripts to your `package.json`.
+  * For iOS and Android applications add extra scripts to your `package.json`:
 
     ```
     "ios": "react-native run-ios",
     "android": "react-native run-android"
     ```
+
+    After that, run `npm run ios` or `npm run android`.
 
 # Todo Application
 
