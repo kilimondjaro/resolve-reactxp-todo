@@ -11,6 +11,7 @@ import {
 } from 'reactxp'
 import { bindActionCreators } from 'redux'
 import { connect } from 'resolve-redux'
+import { Helmet } from 'react-helmet'
 import ToggleSwitch from './ToggleSwitch'
 
 import actions from '../actions'
@@ -86,6 +87,21 @@ class App extends Component {
     return (
       <ScrollView style={styles.scroll}>
         <View style={styles.container}>
+        <Helmet>
+          <style type="text/css">{`
+            html, body, .app-container {
+                width: 100%;
+                height: 100%;
+                padding: 0;
+                border: none;
+                margin: 0;
+                font-family: proxima-nova, "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif
+              }
+            *:focus {
+              outline: 0;
+            }
+        `}</style>
+        </Helmet>
           <Text style={styles.header}>TODO</Text>
           <View style={styles.list}>
             {Object.keys(todos).map((id, index) => (

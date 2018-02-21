@@ -20,7 +20,7 @@ export default {
     adapter: fileAdapter,
     params: { pathToFile: dbPath }
   },
-  initialState: () => ({}),
+  initialState: () => ({a: 123123}),
   aggregates,
   initialSubscribedEvents: { types: [], ids: [] },
   readModels,
