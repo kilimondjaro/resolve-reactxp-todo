@@ -1,60 +1,63 @@
 
-# **Resolve + Reactxp Todo Example**
+# **Using ReSolve with ReactXP application**
+## Create a new ReSolve Application
 
+Use the **[create-resolve-app](https://github.com/reimagined/resolve/tree/master/packages/create-resolve-app)** CLI tool to create a new reSolve project.
 
-# Getting Started
-## Creating a New ReSolve Application
+First we should install **create-resolve-app** package globally.
 
-Use the [create-resolve-app](https://github.com/reimagined/resolve/tree/master/packages/create-resolve-app) CLI tool to create a new reSolve project.
-
-Install create-resolve-app globally.
-
-```
+```bash
 npm i -g create-resolve-app
 ```
 
-Create an empty reSolve project and run the application in the development mode.
+Create an empty **reSolve** project and run the application in the development mode.
 
-```
+```bash
 create-resolve-app resolve-reactxp-todo
-cd resolve-reactxp-todo
-npm run dev
 ```
 
-The application opens in the browser at [http://localhost:3000/](http://localhost:3000/).
+Now we have a sample backend and a web application. To check if everything is all right type the following commands.
 
-## Creating a New React Native Application
+## Create a new React Native Application
 
-Use the [create-react-native-app](https://github.com/react-community/create-react-native-app) CLI tool to create a new react native project.
+Use the **[create-react-native-app](https://github.com/react-community/create-react-native-app)** CLI tool to create a new react native project.
 
-Install create-react-native-app globally.
+Install **create-react-native-app** globally.
 
-```
+```bash
 npm i -g create-react-native-app
 ```
 
 Create a default react native project.
 
-```
-create-react-native-app ResolveReactxpTodo
-cd ResolveReactxpTodo/
-```
-
-By default all native folders are hidden inside build scripts, that is why you should run `eject` command.
-
-```
-npm run eject
+```bash
+create-react-native-app resolve-reactxp-todo-rn
 ```
 
-Copy extracted `ios` and `android` folders to your `resolve-reactxp-todo` project folder.
+Now we have a sample react native application. To embed it as a platform to our **ReSolve** project we must merge the same files for both projects and copy other files (except node_modules).
+Files to merge:
+
+* .flowconfig
+* .gitignore
+* package.json
+
+Files to copy:
+
+* .babel.rc
+* App.js
+* app.json
+* App.test
+* .watchmanconfig
+
+Now we ready to setup ReactXP
 
 # Set up ReactXP infrastructure
 
-## Install necessary dependencies
+## Add ReactXP packages dependencies
 
-Add these npm dependencies to your `package.json` file and run `npm install`.
+Add (or change) these npm dependencies to your `package.json`.
 
-```
+```json
 "react-native": "^0.51.0",
 "react-native-windows": "^0.51.0-rc.1",
 "reactxp": "^0.51.0",
@@ -63,50 +66,41 @@ Add these npm dependencies to your `package.json` file and run `npm install`.
 "reactxp-video": "^0.2.3"
 ```
 
-
-Also install few devDependencies:
-
-```
-npm i --save-dev babel-preset-react-native
-```
-
-Add `.babelrc` file
-
-```
-{
-  "presets": [
-    "react-native"
-  ]
-}
-```
-
 ## Environment variables
 Since `Resolve` uses enviroment variables and react native does not support them, you should install additional babel plugin for support of inline environment variables.
 
-Install `babel-plugin-transform-inline-environment-variables`.
+Add dev dependency to your `package.json`.
 
-```
-npm i --save-dev babel-plugin-transform-inline-environment-variables
+```json
+"babel-plugin-transform-inline-environment-variables": "^0.3.0"
 ```
 
-Update `.babelrc` file.
+Add **transform-inline-environment-variables** to your `.babelrc` plugins array.
 
-```
+```json
 {
-  "presets": [
-    "react-native"
-  ],
-  "plugins": [
-    "transform-inline-environment-variables"
-  ]
+  "presets": ["babel-preset-expo"],
+  "env": {
+    "development": {
+      "plugins": [
+        "transform-react-jsx-source",
+        "transform-inline-environment-variables"
+      ]
+    }
+  }
 }
+
 ```
 
+Now install all of the dependencies.
+
+```bash
+npm install
+```
 
 # Client index file
-In ReactXP applications you will have one client index file for all platforms. Since `Resolve` by default supports only web applications, you should create a new cleint index file.
 
-Create ReactXP a new `client/index.js` file.
+Create `client/index.js`.
 
 ```js
 import React from 'react'
@@ -126,55 +120,54 @@ RX.UserInterface.setMainView(
 )
 ```
 
-You then should update a path to this index file for all three platforms.
+Modify react native `App.js` index file.
+
+```js
+import App from './client/index';
+
+export default App;
+``` 
+
+Modify expo application `app.json` file.
+
+```js
+{
+  "expo": {
+    "sdkVersion": "25.0.0",
+    "appKey": "RXApp"
+  }
+}
+```
+
 
 ## Web
 
 For `web` application update `dev` and `build` sctipts in `package.json` file.
 
-```
+```json
 "build": "INDEX=client/index.js resolve-scripts build",
 "dev": "INDEX=client/index.js resolve-scripts dev",
 ```
 
-## iOS
-For `iOS` application update `ios/<project_name>/AppDelegate.m`.
+## ReactXP scripts
 
-Update index file path
-```ObjectiveC
-jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"client/index" fallbackResource:nil];
+Add these scripts to `package.json`.
+
+```json
+"rxp-start": "ROOT_PATH=http://172.22.1.49:3000 react-native-scripts start",
+"rxp-android": "ROOT_PATH=http://172.22.1.49:3000 react-native-scripts android",
+"rxp-ios": "ROOT_PATH=http://172.22.1.49:3000 react-native-scripts ios",
+"rxp-eject": "react-native-scripts eject",
+"rxp-test": "node node_modules/jest/bin/jest.js",
 ```
 
-Also all ReactXP applications should have the same `moduleName:@"RXApp"`, which you can change in the same `AppDelegate.m`
+Specify the main script to run sample in expo.
 
-```ObjectiveC
-RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
-                                                      moduleName:@"RXApp"
-                                               initialProperties:nil
-                                                   launchOptions:launchOptions];
+```json
+"main": "./node_modules/expo/AppEntry.js",
 ```
 
-## Android
-
-Update client index path in `android/app/src/main/java/com/<project_name>/MainApplication.java`
-
-```java
-@Override
-protected String getJSMainModuleName() {
-  return "client/index";
-}
-```
-
-Update component name in `android/app/src/main/java/com/<project_name>/MainActivity.java`
-
-```java
-@Override
-protected String getMainComponentName() {
-    return "RXApp";
-}
-```
-
-## Runing Hello World
+## ReactXP Hello World
 
 Replace `React` components with `ReactXP` components in `client/components/App.js` in order to run application on all platforms.
 
@@ -212,14 +205,13 @@ class App extends Component {
 export default App
 ```
 
-For web run `npm run dev`.
+Start backend and web server with `npm run dev`.
+Start react native packager (in separate terminal) with `rxp-start`.
 
-To run iOS and Android applications add extra scripts to your `package.json`.
 
-```
-"ios": "react-native run-ios",
-"android": "react-native run-android"
-```
+Now you can open Hello World in browser at http://localhost:3000.
+Read QR-code from console by **Expo** app.
+
 
 # Todo Application
 
