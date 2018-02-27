@@ -79,7 +79,8 @@ class App extends Component {
     const {
       todos,
       createItem,
-      toggleItem,
+      checkItem,
+      uncheckItem,
       removeItem,
       aggregateId
     } = this.props
@@ -109,7 +110,8 @@ class App extends Component {
                 <Text style={styles.todoIndex}>{`${index + 1}.`}</Text>
                 <ToggleSwitch
                   value={todos[id].checked}
-                  onChange={toggleItem.bind(null, aggregateId, { id })}
+                  onChecked={checkItem.bind(null, aggregateId, { id })}
+                  onUnchecked={uncheckItem.bind(null, aggregateId, { id })}
                 />
                 <Text style={styles.todoText}>{todos[id].text}</Text>
                 <Button

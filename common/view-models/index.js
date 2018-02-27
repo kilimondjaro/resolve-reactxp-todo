@@ -10,13 +10,20 @@ export default [
                   checked: false
               }
           }),
-          ITEM_TOGGLED: (state, { payload: { id } }) => ({
+          ITEM_CHECKED: (state, { payload: { id } }) => ({
               ...state,
               [id]: {
                   ...state[id],
-                  checked: !state[id].checked
+                  checked: true
               }
           }),
+          ITEM_UNCHECKED: (state, { payload: { id } }) => ({
+            ...state,
+            [id]: {
+                ...state[id],
+                checked: false
+            }
+        }),
           ITEM_REMOVED: (state, { payload: { id } }) => {
               const nextState = { ...state };
               delete nextState[id];
