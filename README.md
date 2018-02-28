@@ -89,7 +89,15 @@ Add **transform-inline-environment-variables** to your `.babelrc` plugins array.
     }
   }
 }
+```
 
+Add `jest` config to the root of `package.json` (or expo eject command can cause an error)
+
+```json
+"jest": 
+{
+    "preset": "jest-expo"
+}
 ```
 
 Now install all of the dependencies.
