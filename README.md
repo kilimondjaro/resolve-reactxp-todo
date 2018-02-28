@@ -19,7 +19,7 @@ yarn global add create-resolve-app
 Create the todo sample **reSolve** project.
 
 ```bash
-create-resolve-app resolve-reactxp-todo --sample
+create-resolve-app resolve-reactxp-todo
 ```
 
 Now we have a sample backend and a web application. To check if everything is all right run the following commands.
