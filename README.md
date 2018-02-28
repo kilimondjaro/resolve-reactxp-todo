@@ -577,4 +577,30 @@ Specify the main script to run sample in expo.
 "main": "./node_modules/expo/AppEntry.js"
 ```
 
+## Running
+
+Start development backend server and web application with:
+```bash
+yarn run dev
+```
+
+Start expo packager with:
+```bash
+yarn run rxp-start
+```
+
+Start expo within iOS simulator with:
+```bash
+yarn run rxp-ios
+```
+
+Start expo within android simulator with:
+```bash
+yarn run rxp-android
+```
+
+To convert application to a pure react native package use:
+```bash
+yarn run rxp-eject
+```
 
