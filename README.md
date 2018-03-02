@@ -11,7 +11,7 @@ If you don't have yarn installed in your system please install it with:
 npm install -g yarn
 ```
 
-### Create new reSolve application 
+### Create new reSolve application
 
 The [reSolve](https://github.com/reimagined/resolve) framework have a special tool called [create-resolve-app](https://github.com/reimagined/resolve/tree/master/packages/create-resolve-app) for creating applications.
 Install this package globally:
@@ -21,14 +21,14 @@ yarn global add create-resolve-app
 ```
 
 If everything is ok we must have the `create-resolve-app` command available as executable script at your `$PATH`.
-This command creates an empty or a sample [reSolve](https://github.com/reimagined/resolve) application. Lets create one: 
+This command creates an empty or a sample [reSolve](https://github.com/reimagined/resolve) application. Lets create one:
 
 
 ```bash
 create-resolve-app todo
 ```
 
-Now we have an empty [reSolve](https://github.com/reimagined/resolve) application. 
+Now we have an empty [reSolve](https://github.com/reimagined/resolve) application.
 But supports only the web application.
 To check if everything is all right run:
 
@@ -37,26 +37,22 @@ cd ./todo
 yarn run dev
 ```
 
-This command should start development backend server and run web application in your default web-browser. 
+This command should start development backend server and run web application in your default web-browser.
 Stop development server before proceed with the tutorial.
 
 ### Embed ReactXP support
 
-The [ReactXP](https://github.com/Microsoft/reactxp) framework built at the top of the [React Native](http://facebook.github.io/react-native/). Add needed packages to you `package.json` *dependencies* key. In this tutorial we also want to run our application within [Expo](https://expo.io/), so add its package too. You can use other packages versions on your own. Also we need the native react router because [reSolve](https://github.com/reimagined/resolve) currently uses routes internally. 
+The [ReactXP](https://github.com/Microsoft/reactxp) framework built at the top of the [React Native](http://facebook.github.io/react-native/). Add needed packages to you `package.json` *dependencies* key. In this tutorial we also want to run our application within [Expo](https://expo.io/), so add its package too. You can use other packages versions on your own. Also we need the native react router because [reSolve](https://github.com/reimagined/resolve) currently uses routes internally.
 
 ```json
 {
-  "expo": "^25.0.0",
+  "expo": "^24.0.0",
   "react-native": "^0.51.0",
-  "react-native-windows": "^0.51.0-rc.1",
   "reactxp": "^0.51.0",
-  "reactxp-imagesvg": "^0.2.8",
-  "reactxp-navigation": "^1.0.15",
-  "reactxp-video": "^0.2.3",
   "react-router-native": "^4.2.0"
 }
 ```
-Since [reSolve](https://github.com/reimagined/resolve) uses enviroment variables and react native does not support them, you should install additional babel plugin for support of inline environment variables. In addition we need expo babel preset and [React Native](http://facebook.github.io/react-native/) scripts package to property run and build our application. `my-local-ip` is the utility package to determine development machine IP address. We'll need it later. 
+Since [reSolve](https://github.com/reimagined/resolve) uses enviroment variables and react native does not support them, you should install additional babel plugin for support of inline environment variables. In addition we need expo babel preset and [React Native](http://facebook.github.io/react-native/) scripts package to property run and build our application. `my-local-ip` is the utility package to determine development machine IP address. We'll need it later.
 
 Add this packages to your `package.json` *devDependencies* key.
 
@@ -75,14 +71,10 @@ Create or modify the [.babelrc](https://babeljs.io/docs/usage/babelrc/) file in 
 ```json
 {
   "presets": ["babel-preset-expo"],
-  "env": {
-    "development": {
-      "plugins": [
-        "transform-react-jsx-source",
-        "transform-inline-environment-variables"
-      ]
-    }
-  }
+  "plugins": [
+    "transform-react-jsx-source",
+    "transform-inline-environment-variables"
+  ]
 }
 ```
 
@@ -90,7 +82,7 @@ Create or modify the [.babelrc](https://babeljs.io/docs/usage/babelrc/) file in 
 
 ```json
 {
-  "jest": 
+  "jest":
   {
     "preset": "jest-expo"
   }
@@ -108,7 +100,7 @@ yarn install
 Now lets implement simple business logic. The concrete of the [reSolve](https://github.com/reimagined/resolve) framework is the [CQRS](https://martinfowler.com/bliki/CQRS.html) pattern implementation that uses [Event Sourcing](https://martinfowler.com/eaaDev/EventSourcing.html) mechanics. For the purposes of this tutorial we can say that an **aggregate** handles commands, implements business logic of the system and generates events that contains changes of the system. Otherwise, a **viewModel**, or a **projection** in terms of event sourcing, *projects* events to an appropriate denormalized data structure.
 
 The business logic of our **Todo** sample is pretty simple:
- 
+
  - user can create an item
  - user can delete an item
  - user can check an item
@@ -185,11 +177,11 @@ export default [
 ];
 ```
 
-That's it! We had implemented simple business logic and create simple view model. [reSolve](https://github.com/reimagined/resolve) will take care of client-server intercommunication and data persistence. Now we are ready to implement [ReactXP](https://github.com/Microsoft/reactxp) based UI. 
+That's it! We had implemented simple business logic and create simple view model. [reSolve](https://github.com/reimagined/resolve) will take care of client-server intercommunication and data persistence. Now we are ready to implement [ReactXP](https://github.com/Microsoft/reactxp) based UI.
 
 ### Index files
 
-By default [reSolve](https://github.com/reimagined/resolve) uses `client/components/App.js` file as an application entry point. In order to make [ReactXP](https://github.com/Microsoft/reactxp) work we should override this behaviour to make some initialization. Since [reSolve](https://github.com/reimagined/resolve) uses router internally we also need two index files - for the web application and for the [React Native](http://facebook.github.io/react-native/) application. Thats because web and native routers are not the same thing.  
+By default [reSolve](https://github.com/reimagined/resolve) uses `client/components/App.js` file as an application entry point. In order to make [ReactXP](https://github.com/Microsoft/reactxp) work we should override this behaviour to make some initialization. Since [reSolve](https://github.com/reimagined/resolve) uses router internally we also need two index files - for the web application and for the [React Native](http://facebook.github.io/react-native/) application. Thats because web and native routers are not the same thing.
 
 Create web index file `client/index.js`:
 
@@ -243,24 +235,23 @@ RX.UserInterface.setMainView(
 )
 ```
 
-[Expo](https://expo.io/) uses `App.js` file in the root directory of the project as an entry point for the packager and looks for the `main` module registered with the AppRegistry. 
-It can be configured with the [app.json](https://docs.expo.io/versions/latest/guides/configuration.html) file in the root directory of the project: 
+[Expo](https://expo.io/) uses `App.js` file in the root directory of the project as an entry point for the packager and looks for the `main` module registered with the AppRegistry.
+It can be configured with the [app.json](https://docs.expo.io/versions/latest/guides/configuration.html) file in the root directory of the project:
 ```json
 {
   "expo": {
-    "sdkVersion": "25.0.0",
-    "appKey": "RXApp",
-    "entryPoint": "client/native.js"
+    "sdkVersion": "24.0.0",
+    "appKey": "RXApp"
   }
 }
 ```
 
 ## Redux
 
-[reSolve](https://github.com/reimagined/resolve) framework greatly supports the [Redux](https://redux.js.org) library to manage view data for the [React](https://reactjs.org/) and [React Native](http://facebook.github.io/react-native/) components. The [ReactXP](https://github.com/Microsoft/reactxp) based completely on [React Native](http://facebook.github.io/react-native/), so we can use this approach without any doubt. 
+[reSolve](https://github.com/reimagined/resolve) framework greatly supports the [Redux](https://redux.js.org) library to manage view data for the [React](https://reactjs.org/) and [React Native](http://facebook.github.io/react-native/) components. The [ReactXP](https://github.com/Microsoft/reactxp) based completely on [React Native](http://facebook.github.io/react-native/), so we can use this approach without any doubt.
 
 
-[Redux](https://redux.js.org) uses *actions* to modify the view state. [reSolve](https://github.com/reimagined/resolve) framework provides the utility function to generate these actions from the existing *aggregates*. 
+[Redux](https://redux.js.org) uses *actions* to modify the view state. [reSolve](https://github.com/reimagined/resolve) framework provides the utility function to generate these actions from the existing *aggregates*.
 
 Create `client/actions/index.js` file:
 
@@ -275,7 +266,7 @@ export default aggregates.reduce(
 )
 ```
 
-[Redux](https://redux.js.org) uses *reducers* to map actions into view state. Of course, [reSolve](https://github.com/reimagined/resolve) provides the utility function for that too. The function creates *reducers* from registered *viewModels*. 
+[Redux](https://redux.js.org) uses *reducers* to map actions into view state. Of course, [reSolve](https://github.com/reimagined/resolve) provides the utility function for that too. The function creates *reducers* from registered *viewModels*.
 Modify `reducers/index.js` file:
 
 ```js
@@ -284,7 +275,7 @@ import { createViewModelsReducer } from 'resolve-redux';
 export default createViewModelsReducer();
 ```
 
-[Redux](https://redux.js.org) now ready. Its time for [ReactXP](https://github.com/Microsoft/reactxp) UI components. 
+[Redux](https://redux.js.org) now ready. Its time for [ReactXP](https://github.com/Microsoft/reactxp) UI components.
 
 ## ReactXP UI Components
 
@@ -611,7 +602,7 @@ yarn run rxp-start
 
 If the packager started normally you will see a QR-code in you terminal. Read this QR-code with [Expo](https://expo.io/) app installed on you mobile device to see working application.
 
-Also you can start application in iOS or Android simulator with: 
+Also you can start application in iOS or Android simulator with:
 ```bash
 yarn run rxp-ios
 yarn run rxp-android

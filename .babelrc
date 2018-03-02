@@ -1,8 +1,7 @@
 {
-  "presets": [
-    "react-native"
-  ],
+  "presets": ["babel-preset-expo"],
   "plugins": [
+    "transform-react-jsx-source",
     "transform-inline-environment-variables"
   ]
 }
