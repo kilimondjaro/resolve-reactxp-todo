@@ -1,50 +1,51 @@
 
 # ReSolve with ReactXP Tutorial
 
-In this tutorial we create an application that uses the [ReactXP](https://github.com/Microsoft/reactxp) framework for UI and the [reSolve](https://github.com/reimagined/resolve) framework for backend business logic, UI state management and communication and running within [Expo](https://expo.io/) app. This tutorial based on the [hello-world-js](https://github.com/Microsoft/reactxp/tree/master/samples/hello-world-js) sample from [ReactXP](https://github.com/Microsoft/reactxp) framework that implements simple **Todo** list app. Before proceed make sure you have latest [NodeJs](https://nodejs.org).
+In this tutorial we create an application that uses the [ReactXP](https://github.com/Microsoft/reactxp) UI framework with the [reSolve](https://github.com/reimagined/resolve) framework for backend business logic. UI state management and communication are implemented within an [Expo](https://expo.io/) app. This tutorial is based on the [hello-world-js](https://github.com/Microsoft/reactxp/tree/master/samples/hello-world-js) example and describes the creation of a simple **ToDo List** app.
 
-### yarn package manager
+> Note: Make sure you have the latest [Node.js](https://nodejs.org) before proceeding.
 
-If you don't have yarn installed in your system please install it with:
+### Yarn Package Manager
 
-```bash
+In this tutorial we use [Yarn](https://yarnpkg.com/en/) package manager. If you don't have `yarn`, install it with the following command:
+
+```sh
 npm install -g yarn
 ```
 
-### Create new reSolve application
+### Create a New reSolve Application
 
-The [reSolve](https://github.com/reimagined/resolve) framework have a special tool called [create-resolve-app](https://github.com/reimagined/resolve/tree/master/packages/create-resolve-app) for creating applications.
-Install this package globally:
+The [reSolve](https://github.com/reimagined/resolve) framework has a [create-resolve-app](https://github.com/reimagined/resolve/tree/master/packages/create-resolve-app) tool for creating **reSolve**-enabled applications.
+Install the corresponding package globally:
 
-```bash
+```sh
 yarn global add create-resolve-app
 ```
 
-If everything is ok we must have the `create-resolve-app` command available as executable script at your `$PATH`.
-This command creates an empty or a sample [reSolve](https://github.com/reimagined/resolve) application. Lets create one:
+If the installation is successful, you should have a `create-resolve-app` command available in your shell.
+This command creates a [reSolve](https://github.com/reimagined/resolve) application template. Let's create one:
 
 
-```bash
+```sh
 create-resolve-app todo
 ```
 
-Now we have an empty [reSolve](https://github.com/reimagined/resolve) application.
-But supports only the web application.
-To check if everything is all right run:
+When the operation finishes, we have an empty [reSolve](https://github.com/reimagined/resolve) web application.
+Check that it works by executing the following commands.
 
-```bash
-cd ./todo
+```sh
+cd todo
 yarn run dev
 ```
 
-This command should start development backend server and run web application in your default web-browser.
-Stop development server before proceed with the tutorial.
+This should start a development server and run the web application in your default browser.
+Stop the development server before proceeding.
 
-### Embed ReactXP support
+### Add a ReactXP Support
 
-The [ReactXP](https://github.com/Microsoft/reactxp) framework built at the top of the [React Native](http://facebook.github.io/react-native/). Add needed packages to you `package.json` *dependencies* key. In this tutorial we also want to run our application within [Expo](https://expo.io/), so add its package too. You can use other packages versions on your own. Also we need the native react router because [reSolve](https://github.com/reimagined/resolve) currently uses routes internally.
+The [ReactXP](https://github.com/Microsoft/reactxp) framework is based on the [React Native](http://facebook.github.io/react-native/). Add the required packages to your `package.json` to the *dependencies* section. We also need the native react router because the current [reSolve](https://github.com/reimagined/resolve) version uses routes internally.
 
-```json
+```js
 {
   "expo": "^24.0.0",
   "react-native": "^0.51.0",
@@ -52,7 +53,8 @@ The [ReactXP](https://github.com/Microsoft/reactxp) framework built at the top o
   "react-router-native": "^4.2.0"
 }
 ```
-Since [reSolve](https://github.com/reimagined/resolve) uses enviroment variables and react native does not support them, you should install additional babel plugin for support of inline environment variables. In addition we need expo babel preset and [React Native](http://facebook.github.io/react-native/) scripts package to property run and build our application. `my-local-ip` is the utility package to determine development machine IP address. We'll need it later.
+
+Since [reSolve](https://github.com/reimagined/resolve) uses enviroment variables and react native does not support them, you should install additional babel plugin for inline environment variables support. In addition we need expo babel preset and [React Native](http://facebook.github.io/react-native/) scripts package to property run and build our application. `my-local-ip` is the utility package to determine development machine IP address. We'll need it later.
 
 Add this packages to your `package.json` *devDependencies* key.
 
@@ -91,7 +93,7 @@ Create or modify the [.babelrc](https://babeljs.io/docs/usage/babelrc/) file in 
 
 Now we are ready you install all of the dependencies.
 
-```bash
+```sh
 yarn install
 ```
 
@@ -591,25 +593,25 @@ To run application within [Expo](https://expo.io/) we also must override the mai
 ```
 
 We are ready to launch. Firstly start development backend server and web application with:
-```bash
+```sh
 yarn run dev
 ```
 
 Now we can start [React Native](http://facebook.github.io/react-native/) packager with:
-```bash
+```sh
 yarn run rxp-start
 ```
 
 If the packager started normally you will see a QR-code in you terminal. Read this QR-code with [Expo](https://expo.io/) app installed on you mobile device to see working application.
 
 Also you can start application in iOS or Android simulator with:
-```bash
+```sh
 yarn run rxp-ios
 yarn run rxp-android
 ```
 
 If you want to convert the application to pure [React Native](http://facebook.github.io/react-native/) project use:
-```bash
+```sh
 yarn run rxp-eject
 ```
 This command will create native projects for each platform and removes all redundant dependencies. From this moment you can add custom or 3rd-party [ReactXP](https://github.com/Microsoft/reactxp) and [React Native](http://facebook.github.io/react-native/) controls .
