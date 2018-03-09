@@ -443,7 +443,8 @@ const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch)
 export default connect(mapStateToProps, mapDispatchToProps)(App)
 ```
 
-Replace the content of `client/components/ToggleSwitch.js` file with:
+Replace the `client/components/ToggleSwitch.js` file's contents with the following code:
+
 ```js
 /**
  * ToggleSwitch.js
@@ -565,11 +566,11 @@ export default class ToggleSwitch extends RX.Component {
 }
 ```
 
-### Running applications
+### Running Applications
 
-In order to properly start the applications we need to modify `npm` scripts in `package.json` file.
+In order to properly start the applications, we need to modify `npm` scripts in the `package.json` file.
 
-```json
+```js
 {
   "build": "INDEX=client/index.js resolve-scripts build",
   "dev": "INDEX=client/index.js resolve-scripts dev",
@@ -581,35 +582,40 @@ In order to properly start the applications we need to modify `npm` scripts in `
 }
 ```
 
-To run application within [Expo](https://expo.io/) we also must override the main script in `package.json`.
+The [Expo](https://expo.io/) toolchin also requires changing the main script path in the `package.json` file:
 
-```json
+```js
 {
   "main": "./node_modules/expo/AppEntry.js"
 }
 ```
 
-We are ready to launch. Firstly start development backend server and web application with:
+Now we are ready for a launch. First, start development backend server and web application with the following command:
+
 ```sh
 yarn run dev
 ```
 
-Now we can start [React Native](http://facebook.github.io/react-native/) packager with:
+After that, we can start a [React Native](http://facebook.github.io/react-native/) packager with the following command:
+
 ```sh
 yarn run rxp-start
 ```
 
-If the packager started normally you will see a QR-code in you terminal. Read this QR-code with [Expo](https://expo.io/) app installed on you mobile device to see working application.
+You should see a QR code in you terminal if the packager started normally. Scan this QR code with the [Expo](https://expo.io/) app on you mobile device to access your application.
 
-Also you can start application in iOS or Android simulator with:
+You can also start an app within an iOS or Android emulator using one of the following commands:
+
 ```sh
 yarn run rxp-ios
 yarn run rxp-android
 ```
 
-If you want to convert the application to pure [React Native](http://facebook.github.io/react-native/) project use:
+If you need to convert the application to a pure [React Native](http://facebook.github.io/react-native/) project, use the following command:
+
 ```sh
 yarn run rxp-eject
 ```
-This command will create native projects for each platform and removes all redundant dependencies. From this moment you can add custom or 3rd-party [ReactXP](https://github.com/Microsoft/reactxp) and [React Native](http://facebook.github.io/react-native/) controls .
+
+This command creates native projects for each platform and removes all redundant dependencies. After ejecting, you can use custom or 3rd-party [ReactXP](https://github.com/Microsoft/reactxp) and [React Native](http://facebook.github.io/react-native/) controls.
 
