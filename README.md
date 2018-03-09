@@ -43,7 +43,7 @@ Stop the development server before proceeding.
 
 ### Add a ReactXP Support
 
-The [ReactXP](https://github.com/Microsoft/reactxp) framework is based on the [React Native](http://facebook.github.io/react-native/). Add the required packages to your `package.json` to the *dependencies* section. We also need the native react router because the current [reSolve](https://github.com/reimagined/resolve) version uses routes internally.
+The [ReactXP](https://github.com/Microsoft/reactxp) framework is based on the [React Native](http://facebook.github.io/react-native/). Add the required packages to your `package.json` to the *dependencies* section:
 
 ```js
 {
@@ -54,11 +54,13 @@ The [ReactXP](https://github.com/Microsoft/reactxp) framework is based on the [R
 }
 ```
 
-Since [reSolve](https://github.com/reimagined/resolve) uses enviroment variables and react native does not support them, you should install additional babel plugin for inline environment variables support. In addition we need expo babel preset and [React Native](http://facebook.github.io/react-native/) scripts package to property run and build our application. `my-local-ip` is the utility package to determine development machine IP address. We'll need it later.
+> Note: We need the native react router because the current [reSolve](https://github.com/reimagined/resolve) version uses routes internally.
 
-Add this packages to your `package.json` *devDependencies* key.
+Since [reSolve](https://github.com/reimagined/resolve) uses enviroment variables and react native does not support them, you should install additional babel plugin for inline environment variables support. In addition we need **babel-present-expo** and [react-native-scripts](http://facebook.github.io/react-native/) packages. The `my-local-ip` is the utility package to determine development machine's IP address. We'll need it later.
 
-```json
+Add these packages to your `package.json` to the *devDependencies* section:
+
+```js
 {
   "babel-plugin-transform-inline-environment-variables": "^0.3.0",
   "babel-preset-expo": "^4.0.0",
@@ -70,7 +72,7 @@ Add this packages to your `package.json` *devDependencies* key.
 
 Create or modify the [.babelrc](https://babeljs.io/docs/usage/babelrc/) file in the root directory of your project:
 
-```json
+```js
 {
   "presets": ["babel-preset-expo"],
   "plugins": [
@@ -80,7 +82,7 @@ Create or modify the [.babelrc](https://babeljs.io/docs/usage/babelrc/) file in 
 }
 ```
 
-[Expo](https://expo.io/) uses jest at least with `eject` command. We need to specify `jest` configuration preset. Add `jest` key to the root object of your `package.json`.
+Since [Expo](https://expo.io/) uses [Jest](https://facebook.github.io/jest/), we need to configure it. Add the `jest` key to your `package.json`'s root object as follows.
 
 ```json
 {
@@ -91,7 +93,7 @@ Create or modify the [.babelrc](https://babeljs.io/docs/usage/babelrc/) file in 
 }
 ```
 
-Now we are ready you install all of the dependencies.
+Now we are ready to install all the dependencies.
 
 ```sh
 yarn install
@@ -99,17 +101,16 @@ yarn install
 
 ### Event sourced CQRS
 
-Now lets implement simple business logic. The concrete of the [reSolve](https://github.com/reimagined/resolve) framework is the [CQRS](https://martinfowler.com/bliki/CQRS.html) pattern implementation that uses [Event Sourcing](https://martinfowler.com/eaaDev/EventSourcing.html) mechanics. For the purposes of this tutorial we can say that an **aggregate** handles commands, implements business logic of the system and generates events that contains changes of the system. Otherwise, a **viewModel**, or a **projection** in terms of event sourcing, *projects* events to an appropriate denormalized data structure.
+Now let's implement an application's business logic. The [reSolve](https://github.com/reimagined/resolve) framework is used to simplify the [CQRS](https://martinfowler.com/bliki/CQRS.html) and [Event Sourcing](https://martinfowler.com/eaaDev/EventSourcing.html) patterns implementation. To put it simply, an **aggregate** handles **commands**, implements business logic and generates **events** to track changes. On the front-end side, a **viewModel** (**projection** in particular) combines events and determines the system's state.
 
-The business logic of our **Todo** sample is pretty simple:
+The business logic of our **To Do List** application is simple. User can do the folowing things:
 
- - user can create an item
- - user can delete an item
- - user can check an item
- - user can uncheck an item
+- Create an item
+- Delete an item
+- Check an item
+- Uncheck an item
 
-Thus, we need only one simple `Todo` item aggregate with 4 command handlers.
-Modify `common/aggregates/index.js`:
+Thus, we need only one `Todo` aggregate with 4 command handlers. Modify the `common/aggregates/index.js` file:
 
 ```js
 export default [
@@ -137,8 +138,7 @@ export default [
 ];
 ```
 
-Our `Todo` aggregate generates an event upon command executed. We need to create a **viewModel** to handle this events and create view data for the UI.
-Modify `common/view-models/index.js`.
+The `Todo` aggregate generates an event on every command. We need to create a **viewModel** to handle these events and prepare the data for UI. Modify the `common/view-models/index.js` file:
 
 ```js
 export default [
