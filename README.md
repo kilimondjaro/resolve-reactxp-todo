@@ -138,7 +138,7 @@ export default [
 ];
 ```
 
-The `Todo` aggregate generates an event on every command. We need to create a **viewModel** to handle these events and prepare the data for UI. Modify the `common/view-models/index.js` file:
+The `Todo` aggregate generates an event on every command. We need to create a **viewModel** to handle these events and prepare the data for the UI. Modify the `common/view-models/index.js` file:
 
 ```js
 export default [
@@ -179,13 +179,14 @@ export default [
 ];
 ```
 
-That's it! We had implemented simple business logic and create simple view model. [reSolve](https://github.com/reimagined/resolve) will take care of client-server intercommunication and data persistence. Now we are ready to implement [ReactXP](https://github.com/Microsoft/reactxp) based UI.
+The business logic implementation is finished now. [reSolve](https://github.com/reimagined/resolve) takes care of client-server intercommunication and data persistence. Now we are ready to implement a [ReactXP](https://github.com/Microsoft/reactxp)-based user interface.
+
 
 ### Index files
 
-By default [reSolve](https://github.com/reimagined/resolve) uses `client/components/App.js` file as an application entry point. In order to make [ReactXP](https://github.com/Microsoft/reactxp) work we should override this behaviour to make some initialization. Since [reSolve](https://github.com/reimagined/resolve) uses router internally we also need two index files - for the web application and for the [React Native](http://facebook.github.io/react-native/) application. Thats because web and native routers are not the same thing.
+The default [reSolve](https://github.com/reimagined/resolve) application's entry point is located in the `client/components/App.js` file. We should change this in order to use [ReactXP](https://github.com/Microsoft/reactxp). Since [reSolve](https://github.com/reimagined/resolve) uses router internally, we need two index files: one for the web application and one for the [React Native](http://facebook.github.io/react-native/) application.
 
-Create web index file `client/index.js`:
+Create a **Web** index file `client/index.js`:
 
 ```js
 import React from 'react'
@@ -211,7 +212,7 @@ RX.UserInterface.setMainView(
 )
 ```
 
-Create React Native index file `client/native.js`:
+Create a **React Native** index file `client/native.js`:
 
 ```js
 import React from 'react'
@@ -237,9 +238,9 @@ RX.UserInterface.setMainView(
 )
 ```
 
-[Expo](https://expo.io/) uses `App.js` file in the root directory of the project as an entry point for the packager and looks for the `main` module registered with the AppRegistry.
-It can be configured with the [app.json](https://docs.expo.io/versions/latest/guides/configuration.html) file in the root directory of the project:
-```json
+The [Expo](https://expo.io/) toolchain packager's entry point can be configured in the [app.json](https://docs.expo.io/versions/latest/guides/configuration.html#appkey) file in the project's root directory:
+
+```js
 {
   "expo": {
     "sdkVersion": "24.0.0",
@@ -250,12 +251,9 @@ It can be configured with the [app.json](https://docs.expo.io/versions/latest/gu
 
 ## Redux
 
-[reSolve](https://github.com/reimagined/resolve) framework greatly supports the [Redux](https://redux.js.org) library to manage view data for the [React](https://reactjs.org/) and [React Native](http://facebook.github.io/react-native/) components. The [ReactXP](https://github.com/Microsoft/reactxp) based completely on [React Native](http://facebook.github.io/react-native/), so we can use this approach without any doubt.
+The [reSolve](https://github.com/reimagined/resolve) framework has a well support of the [Redux](https://redux.js.org) library, so we can use it in our project for data management. [Redux](https://redux.js.org) uses *actions* to modify the view state and [reSolve](https://github.com/reimagined/resolve) framework provides the utility function to generate these actions from the existing *aggregates*.
 
-
-[Redux](https://redux.js.org) uses *actions* to modify the view state. [reSolve](https://github.com/reimagined/resolve) framework provides the utility function to generate these actions from the existing *aggregates*.
-
-Create `client/actions/index.js` file:
+Create the `client/actions/index.js` file:
 
 ```js
 import { createActions } from 'resolve-redux'
@@ -268,8 +266,7 @@ export default aggregates.reduce(
 )
 ```
 
-[Redux](https://redux.js.org) uses *reducers* to map actions into view state. Of course, [reSolve](https://github.com/reimagined/resolve) provides the utility function for that too. The function creates *reducers* from registered *viewModels*.
-Modify `reducers/index.js` file:
+[Redux](https://redux.js.org) uses *reducers* to infer a state from series of actions and we can use a [reSolve](https://github.com/reimagined/resolve)'s utility function to create *reducers* from registered *viewModels*. Modify the `reducers/index.js` file:
 
 ```js
 import { createViewModelsReducer } from 'resolve-redux';
@@ -277,7 +274,7 @@ import { createViewModelsReducer } from 'resolve-redux';
 export default createViewModelsReducer();
 ```
 
-[Redux](https://redux.js.org) now ready. Its time for [ReactXP](https://github.com/Microsoft/reactxp) UI components.
+The [Redux](https://redux.js.org) configuration is finished. Next, we should configure [ReactXP](https://github.com/Microsoft/reactxp) UI components.
 
 ## ReactXP UI Components
 
